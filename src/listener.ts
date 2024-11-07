@@ -39,7 +39,6 @@ const resetTimeout = () => {
 };
 
 micInputStream.on('data', (data: Buffer) => {
-
   if (recognizer.acceptWaveform(data)) {
     const result = recognizer.result().text;
     if (result.length) {
