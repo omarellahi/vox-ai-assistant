@@ -3,3 +3,4 @@ build/
 models/
 package-lock.json
 yarn.lock
+history.context
