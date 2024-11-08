@@ -1,4 +1,4 @@
-import ollama, { Ollama } from "ollama";
+import ollama from "ollama";
 import fs from 'fs';
 
 export default class AI {
@@ -10,7 +10,6 @@ export default class AI {
     const personalityInstructions = fs.readFileSync(responseInstructionFileLocation ? responseInstructionFileLocation : 'myrelle-model.txt', 'utf-8');
     const commandExecInstructions = fs.readFileSync('command-execution-model.txt', 'utf-8');
     const history = fs.readFileSync('history.context', 'utf-8');
-    // fs.rea
 
     this.system = personalityInstructions + ' ' + commandExecInstructions;
     this.model = ollamaModel;
