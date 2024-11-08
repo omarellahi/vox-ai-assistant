@@ -18,7 +18,7 @@ export default class AI {
   }
 
   public runChat = async (prompt: string) => {
-    return new Promise<String>((resolve) => {
+    return new Promise<string>((resolve) => {
       ollama.generate({
         model: this.model,
         system: this.system,
