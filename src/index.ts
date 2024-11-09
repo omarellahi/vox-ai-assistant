@@ -20,7 +20,7 @@ async function keepAlive() {
   sp.convertTextToAudio(arr).then(keepAlive);
 }
 
-keepAlive();
+// keepAlive();
 
 process.on('SIGINT', () => {
   li.close();
