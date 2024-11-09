@@ -33,6 +33,7 @@ export default class AI {
   public saveContext = async () => {
     return new Promise<void>((resolve) => {
       fs.writeFileSync('history.context', '[' + this.context.toString() + ']');
+      console.log('AI data saved');
       resolve();
     })
   }

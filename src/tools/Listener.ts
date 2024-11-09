@@ -10,11 +10,12 @@ export default class Listener {
   private micInputStream: any;
   private model: Vosk.Model;
   private recognizer: Vosk.Recognizer<any>;
+  public activationWord: string;
 
   private audioTimeout: number;
   public isListeningActive: boolean;
 
-  constructor(audioTimeout: number, voskModel: string) {
+  constructor(audioTimeout: number, voskModel: string, activationWord: string) {
     this.micInstance = Mic({
       rate: '16000',
       channels: '1',
@@ -32,6 +33,7 @@ export default class Listener {
     this.model = new Vosk.Model(modelPath);
 
     this.recognizer = new Vosk.Recognizer({ model: this.model, sampleRate: 16000 });
+    this.activationWord = activationWord;
 
     this.audioTimeout = audioTimeout;
     this.isListeningActive = true;
@@ -45,8 +47,9 @@ export default class Listener {
       this.micInputStream.on('data', (data: Buffer) => {
         if (this.recognizer.acceptWaveform(data)) {
           const result = this.recognizer.result().text;
-          if (result === 'activate' && this.isListeningActive) {
+          if (result === this.activationWord && this.isListeningActive) {
             this.recognizer.reset();
+            this.micInputStream.removeAllListeners('data');
             resolve();
           } else {
             console.log(result);
@@ -57,7 +60,7 @@ export default class Listener {
     });
   }
 
-  public listenForInput = async () => {
+  public listenForInput = async (): Promise<string> => {
     this.micInputStream.removeAllListeners('data');
     return new Promise<string>((resolve) => {
       const statements: string[] = [];
@@ -65,6 +68,7 @@ export default class Listener {
       let timer: NodeJS.Timeout;
       const resetTimer = () => {
         timer = setTimeout(() => {
+          this.micInputStream.removeAllListeners('data');
           resolve(statements.join());
         }, this.audioTimeout);
       }
@@ -75,6 +79,7 @@ export default class Listener {
           const result = this.recognizer.result().text;
           if (result.length) {
             statements.push(result);
+            console.log(result);
             this.recognizer.reset();
             resetTimer();
           }
@@ -83,7 +88,7 @@ export default class Listener {
     });
   }
 
-  public closeListener = () => {
+  public close = () => {
     console.log('Stopping recognition...');
     this.micInstance.stop();
     this.recognizer.free();

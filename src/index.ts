@@ -1,25 +1,31 @@
-import { speak } from "./speaker.js";
 import AI from "./tools/AI.js";
 import Listener from "./tools/Listener.js";
 import Speaker from "./tools/Speaker.js";
 
-// const l = new Listener(3000, 'vosk-model-small-en-us-0.15');
+const li = new Listener(3000, 'vosk-model-small-en-us-0.15', 'hello');
 const ai = new AI('llama3.2');
 const sp = new Speaker();
 
 async function keepAlive() {
-  // console.log('\n\nStarted')
-  // await l.listenForActivationWord();
-  // console.log('Activated');
-  // l.listenForInput().then((e) => {
-  //   console.log(e);
-  //   // l.closeListener();
-  //   keepAlive();
-  // });
-
-  const r = await ai.runChat('open nautilus and then open firefox');
-  const arr = sp.constructPromptForEvaluation(r);
-  await sp.convertTextToAudio(arr);
+  sp.alertSound(1);
+  console.log('\n\nStarted');
+  await li.listenForActivationWord();
+  console.log('Activated');
+  sp.alertSound(1);
+  const input = await li.listenForInput();
+  sp.alertSound(2);
+  console.log('Running AI');
+  const aiResponse = await ai.runChat(input);
+  const arr = sp.constructPromptForEvaluation(aiResponse);
+  sp.convertTextToAudio(arr).then(keepAlive);
 }
 
 keepAlive();
+
+process.on('SIGINT', () => {
+  li.close();
+  ai.saveContext().then(() => {
+    sp.alertSound(2);
+    process.exit();
+  })
+});

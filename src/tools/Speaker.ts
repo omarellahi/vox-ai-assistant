@@ -14,6 +14,14 @@ export default class Speaker {
     this.regexForCommands = /<<exec: "([^"]+)">>/g;
   }
 
+  public alertSound = (v: number) => {
+    if (v === 1) {
+      exec('canberra-gtk-play -i dialog-warning');
+    } else if (v === 2) {
+      exec('canberra-gtk-play -i bell');
+    }
+  }
+
   public constructPromptForEvaluation = (prompt: string): string[] => {
     const finalisedPromptArr: string[] = [];
     const splitArr = prompt.split('.');
@@ -28,7 +36,6 @@ export default class Speaker {
         finalisedPromptArr.push(text);
       }
     }
-    console.log(finalisedPromptArr);
     return finalisedPromptArr;
   }
 
@@ -41,6 +48,7 @@ export default class Speaker {
         const audioFilePath = `temp_voice_${index}.mp3`;
         filePathArr.push(audioFilePath);
 
+        console.log(text);
         return new Promise<string>((resolve) => {
           gtts.save(audioFilePath, () => resolve(audioFilePath));
         });
@@ -50,8 +58,9 @@ export default class Speaker {
 
       for (const filePath of audioFilePaths) {
         await this.playAudio(filePath);
+        this.execCommands();
       }
-  
+
       resolve();
     });
   }
@@ -66,5 +75,13 @@ export default class Speaker {
         });
       })
     });
+  }
+
+  private execCommands = () => {
+    for (const command of this.commandsArr) {
+      console.log(command);
+      exec(command);
+    }
+    this.commandsArr = [];
   }
 }
