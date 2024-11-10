@@ -1,15 +1,24 @@
 # AI Voice Assistant with Personality
 
-This project is an AI-powered voice assistant that allows you to run commands, open apps, or ask for information—all while interacting with a personality! 
+This project is an AI-powered voice assistant that allows you to run commands, open apps, or ask for information—all while interacting with a personality!
 
 ## Requirements
 
 Before you get started, make sure you have the following:
 
 1. **mpg123** (for audio playback):
-   - Install it with the following command (on fedora):
+   - On Rhel, Fedora based distros:
    ```bash
    sudo dnf install mpg123
+   ```
+   - On Debian based distros:
+   ```bash
+   sudo apt update
+   sudo apt install mpg123
+   ```
+   - Using homebrew (for Macos):
+   ```bash
+   brew install mpg123
    ```
 
 2. **Ollama** (for natural language processing):
@@ -55,4 +64,6 @@ Before you get started, make sure you have the following:
 
 ##
 
-Enjoy your new AI voice assistant with a personality! For bugs or feature requests, feel free to open an issue.
+Enjoy your new AI voice assistant with a personality! 
+As of now it has only been tested on my personal machine with Fedora. So please feel free to open an Issue or create PR for feature or bug fixes.
+I would appreciate it!
