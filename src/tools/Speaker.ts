@@ -80,7 +80,7 @@ export default class Speaker {
   private execCommands = () => {
     for (const command of this.commandsArr) {
       console.log(command);
-      exec(command);
+      exec(`gnome-terminal -- bash -c '${command}; exec $SHELL'`);
     }
     this.commandsArr = [];
   }

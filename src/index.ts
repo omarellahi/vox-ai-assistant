@@ -2,7 +2,7 @@ import AI from "./tools/AI.js";
 import Listener from "./tools/Listener.js";
 import Speaker from "./tools/Speaker.js";
 
-const li = new Listener(3000, 'vosk-model-small-en-us-0.15', 'hello');
+const li = new Listener(6000, 'vosk-model-en-us-0.22', 'hello');
 const ai = new AI('llama3.2');
 const sp = new Speaker();
 

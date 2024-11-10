@@ -65,19 +65,20 @@ export default class Listener {
     return new Promise<string>((resolve) => {
       const statements: string[] = [];
 
-      let timer: NodeJS.Timeout;
+      let timer: NodeJS.Timeout | null;
       const resetTimer = () => {
+        if (timer) clearTimeout(timer);
         timer = setTimeout(() => {
           this.micInputStream.removeAllListeners('data');
-          resolve(statements.join());
+          resolve(statements.join('\n'));
         }, this.audioTimeout);
       }
   
   
       this.micInputStream.on('data', (data: Buffer) => {
         if (this.recognizer.acceptWaveform(data)) {
-          const result = this.recognizer.result().text;
-          if (result.length) {
+          const result = this.recognizer.partialResult().partial;
+          if (result.trim().length) {
             statements.push(result);
             console.log(result);
             this.recognizer.reset();
