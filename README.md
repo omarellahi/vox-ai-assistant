@@ -1,5 +1,3 @@
----
-
 # AI Voice Assistant with Personality
 
 This project is an AI-powered voice assistant that allows you to run commands, open apps, or ask for information—all while interacting with a personality! 
@@ -58,5 +56,3 @@ Before you get started, make sure you have the following:
 ---
 
 Enjoy your new AI voice assistant with a personality! For bugs or feature requests, feel free to open an issue.
-
----
