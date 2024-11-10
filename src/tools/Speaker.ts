@@ -6,12 +6,14 @@ import { exec } from 'child_process';
 export default class Speaker {
   private commandsArr: string[];
   private regexForCommands: RegExp;
+  private regexForWebsites: RegExp;
   private player: any;
 
   constructor() {
     this.player = ps({ player: 'mpg123' });
     this.commandsArr = [];
     this.regexForCommands = /<<exec: "([^"]+)">>/g;
+    this.regexForWebsites = /^"https?:\/\/[^\s/$.?#].[^\s]*"$/;
   }
 
   public alertSound = (v: number) => {
@@ -80,7 +82,12 @@ export default class Speaker {
   private execCommands = () => {
     for (const command of this.commandsArr) {
       console.log(command);
-      exec(`gnome-terminal -- bash -c '${command}; exec $SHELL'`);
+      // if (command.includes('firefox') && !this.regexForWebsites.test((command.match(/^(\S+)\s+"(.+)"$/) as unknown as string)[2])) {
+      //   const searchVal = (command.match(/^(\S+)\s+"(.+)"$/) as unknown as string)[2].replace(/^"|"$/g, '').split(' ').join('+');
+      //   exec(`gnome-terminal -- bash -c 'firefox "https://search.brave.com/search?q=${searchVal}"; exec $SHELL'`);
+      // } else {
+        exec(`gnome-terminal -- bash -c '${command}; exec $SHELL'`);
+      // }
     }
     this.commandsArr = [];
   }
