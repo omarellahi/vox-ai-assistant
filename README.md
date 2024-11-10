@@ -9,7 +9,7 @@ This project is an AI-powered voice assistant that allows you to run commands, o
 Before you get started, make sure you have the following:
 
 1. **mpg123** (for audio playback):
-   - Install it with the following command:
+   - Install it with the following command (on fedora):
    ```bash
    sudo dnf install mpg123
    ```
@@ -28,8 +28,8 @@ Before you get started, make sure you have the following:
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/yourusername/your-repository.git
-   cd your-repository
+   git clone git@github.com:omarellahi/vox-ai-assistant.git
+   cd vox-ai-assistant
    ```
 
 2. Install required dependencies:
@@ -42,7 +42,8 @@ Before you get started, make sure you have the following:
 
 - To run the voice assistant:
   ```bash
-  python3 voice_assistant.py
+  npm build //run this to transpile ts to js
+  node .
   ```
 
 - The assistant will wait for your voice commands. You can ask it to run commands, open apps, or give you information.
