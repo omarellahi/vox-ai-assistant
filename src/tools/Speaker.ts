@@ -26,7 +26,7 @@ export default class Speaker {
 
   public constructPromptForEvaluation = (prompt: string): string[] => {
     const finalisedPromptArr: string[] = [];
-    const splitArr = prompt.split('.');
+    const splitArr = prompt.split(/(?<=\S[.!?])\s+(?=\S)/);
     for (const value of splitArr) {
       let text = value;
       const commands = [...text.matchAll(this.regexForCommands)].map(match => match[1]);
@@ -82,12 +82,12 @@ export default class Speaker {
   private execCommands = () => {
     for (const command of this.commandsArr) {
       console.log(command);
-      // if (command.includes('firefox') && !this.regexForWebsites.test((command.match(/^(\S+)\s+"(.+)"$/) as unknown as string)[2])) {
-      //   const searchVal = (command.match(/^(\S+)\s+"(.+)"$/) as unknown as string)[2].replace(/^"|"$/g, '').split(' ').join('+');
-      //   exec(`gnome-terminal -- bash -c 'firefox "https://search.brave.com/search?q=${searchVal}"; exec $SHELL'`);
-      // } else {
+      if (command.includes('firefox') && !this.regexForWebsites.test((command.match(/^(\S+)\s+"?(.+)"?$/) as unknown as string)[2])) {
+        const searchVal = (command.match(/^(\S+)\s+"?(.+)"?$/) as unknown as string)[2].replace(/^"|"$/g, '').split(' ').join('+');
+        exec(`gnome-terminal -- bash -c 'firefox "https://search.brave.com/search?q=${searchVal}"; exec $SHELL'`);
+      } else {
         exec(`gnome-terminal -- bash -c '${command}; exec $SHELL'`);
-      // }
+      }
     }
     this.commandsArr = [];
   }
