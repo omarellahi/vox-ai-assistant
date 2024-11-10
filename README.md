@@ -25,11 +25,11 @@ Before you get started, make sure you have the following:
    - You’ll need this dependency installed to handle advanced interactions. Make sure to follow the installation instructions on [Ollama’s official site](https://ollama.com/) for your platform.
 
 3. **Vosk Language Models** (for offline speech recognition):
-   - Download a Vosk language model and place it in the `models/` directory in the project root.
+   - Download a Vosk language model and place it in the `models/` directory in the project root. Make sure to update `const li = new Listener(timeout, model name, activation word);` function in `index.ts`.
    - For instructions on downloading models, visit the [Vosk models page](https://alphacephei.com/vosk/models).
 
 4. **Internet Connection** (for Text-to-Speech):
-   - TTS functionality requires an internet connection, so make sure you have access to the web for speech synthesis.
+   - TTS functionality requires an internet connection (I haven't found a satisfactory offline TTS, so this will have to do for now).
 
 ## Installation
 
@@ -61,6 +61,7 @@ Before you get started, make sure you have the following:
 - Make sure the **mpg123** package is installed to play audio responses.
 - **Ollama** is necessary for processing advanced commands, so ensure it is properly set up.
 - **Vosk** works offline for speech recognition, but TTS (Text-to-Speech) requires an internet connection.
+- Requires you to create `history.context` file in the root of the project.
 
 ##
 
