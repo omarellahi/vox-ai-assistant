@@ -53,6 +53,6 @@ Before you get started, make sure you have the following:
 - **Ollama** is necessary for processing advanced commands, so ensure it is properly set up.
 - **Vosk** works offline for speech recognition, but TTS (Text-to-Speech) requires an internet connection.
 
----
+##
 
 Enjoy your new AI voice assistant with a personality! For bugs or feature requests, feel free to open an issue.
