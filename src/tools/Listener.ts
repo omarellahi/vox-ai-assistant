@@ -46,7 +46,7 @@ export default class Listener {
     return new Promise<void>((resolve) => {
       this.micInputStream.on('data', (data: Buffer) => {
         if (this.recognizer.acceptWaveform(data)) {
-          const result = this.recognizer.result().text;
+          const result = this.recognizer.partialResult().partial;
           if (result === this.activationWord && this.isListeningActive) {
             this.recognizer.reset();
             this.micInputStream.removeAllListeners('data');
