@@ -19,8 +19,7 @@
     "@types/node": "^22.9.0",
     "gtts": "^0.2.1",
     "node-mic": "^1.0.1",
-    "ollama": "^0.5.9",
-    "openai": "^4.71.0",
+    "ollama": "^0.5.15",
     "play-sound": "^1.1.6",
     "vosk-koffi": "^1.1.1"
   }
