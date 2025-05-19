@@ -18,8 +18,7 @@ export default class Listener {
   constructor(audioTimeout: number, voskModel: string, activationWord: string) {
     this.micInstance = new Mic({
       rate: 16000,
-      channels: 1,
-      threshold: 6
+      channels: 1
     });
 
   
